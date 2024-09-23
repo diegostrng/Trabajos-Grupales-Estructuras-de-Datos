@@ -1,5 +1,6 @@
 #include <iostream>
 #include "ArbolBinarioOrd.h"
+#include "ArbolAVL.h"
 
 int main() {
 
