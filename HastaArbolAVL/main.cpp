@@ -18,6 +18,7 @@ int main() {
     arbol.insertar(50);
     std::cout << "Insertando 25" << std::endl;
     arbol.insertar(25);
+    arbol.insertar(35);
 
     std::cout << "¿El árbol está vacío? " << (arbol.esVacio() ? "Sí" : "No") << std::endl;
     std::cout << "Dato en la raíz: " << arbol.datoRaiz() << std::endl;
