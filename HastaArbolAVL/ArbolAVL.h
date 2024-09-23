@@ -8,6 +8,7 @@ class ArbolAVL : public ArbolBinarioOrd<T> {
 public:
     bool insertar(T val);
     bool eliminar(T val);
+    //hola
 
 private:
     NodoBinario<T>* insertarRec(NodoBinario<T>* nodo, T val);
