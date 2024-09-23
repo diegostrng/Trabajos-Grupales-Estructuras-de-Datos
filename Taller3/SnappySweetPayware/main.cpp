@@ -42,47 +42,47 @@ int main() {
     std::cout << std::endl;
     
     //Prueba de árbol AVL
-    ArbolAVL<int> arbol;
+    ArbolAVL<int> arbol2;
 
-    std::cout << "¿El árbol está vacío? " << (arbol.esVacio() ? "Sí" : "No") << std::endl;
+    std::cout << "¿El árbol está vacío? " << (arbol2.esVacio() ? "Sí" : "No") << std::endl;
 
     std::cout << "Insertando 10" << std::endl;
-    arbol.insertar(10);
+    arbol2.insertar(10);
     std::cout << "Insertando 20" << std::endl;
-    arbol.insertar(20);
+    arbol2.insertar(20);
     std::cout << "Insertando 30" << std::endl;
-    arbol.insertar(30);
+    arbol2.insertar(30);
     std::cout << "Insertando 40" << std::endl;
-    arbol.insertar(40);
+    arbol2.insertar(40);
     std::cout << "Insertando 50" << std::endl;
-    arbol.insertar(50);
+    arbol2.insertar(50);
     std::cout << "Insertando 25" << std::endl;
-    arbol.insertar(25);
+    arbol2.insertar(25);
 
-    std::cout << "¿El árbol está vacío? " << (arbol.esVacio() ? "Sí" : "No") << std::endl;
-    std::cout << "Dato en la raíz: " << arbol.datoRaiz() << std::endl;
-    std::cout << "Altura del árbol: " << arbol.altura() << std::endl;
+    std::cout << "¿El árbol está vacío? " << (arbol2.esVacio() ? "Sí" : "No") << std::endl;
+    std::cout << "Dato en la raíz: " << arbol2.datoRaiz() << std::endl;
+    std::cout << "Altura del árbol: " << arbol2.altura() << std::endl;
 
     std::cout << "Recorrido en preorden: ";
-    arbol.preOrden();
+    arbol2.preOrden();
     std::cout << std::endl;
 
     std::cout << "Recorrido en inorden: "; //no sirve
-    arbol.inOrden();
+    arbol2.inOrden();
     std::cout << std::endl;
 
     std::cout << "Recorrido en posorden: "; //no sirve
-    arbol.posOrden();
+    arbol2.posOrden();
     std::cout << std::endl;
 
     std::cout << "Recorrido en nivel orden: "; 
-    arbol.nivelOrden();
+    arbol2.nivelOrden();
     std::cout << std::endl;
 
     std::cout << "Eliminando 40" << std::endl;
-    arbol.eliminar(40);
+    arbol2.eliminar(40);
     std::cout << "Recorrido en inorden después de eliminar 40: "; //no sirve (obviamente)
-    arbol.inOrden();
+    arbol2.inOrden();
     std::cout << std::endl;
 
 
