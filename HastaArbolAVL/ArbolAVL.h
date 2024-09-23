@@ -9,6 +9,7 @@ public:
     bool insertar(T val);
     bool eliminar(T val);
     //hola
+    //Hola pibe
 
 private:
     NodoBinario<T>* insertarRec(NodoBinario<T>* nodo, T val);
