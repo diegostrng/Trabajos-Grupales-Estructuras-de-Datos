@@ -8,6 +8,7 @@ class ArbolAVL : public ArbolBinarioOrd<T> {
 public:
     bool insertar(T val);
     bool eliminar(T val);
+    bool buscar(T val);
 
 private:
     NodoBinario<T>* insertarRec(NodoBinario<T>* nodo, T val);
@@ -19,6 +20,8 @@ private:
     NodoBinario<T>* rotarDerecha(NodoBinario<T>* y);
     NodoBinario<T>* rotarIzquierda(NodoBinario<T>* x);
     NodoBinario<T>* balancear(NodoBinario<T>* nodo);
+    bool buscarRec(NodoBinario<T>* nodo, T val);
+    
 };
 
 #include "ArbolAVL.hxx"

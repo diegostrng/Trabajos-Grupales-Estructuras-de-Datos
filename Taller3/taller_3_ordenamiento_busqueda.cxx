@@ -13,7 +13,7 @@
 // #include <set>
 // #include <map>
 // TODO #9: incluir cabecera monticulo
-// #include "monticulo.h"
+#include "Monticulo.h"
 
 // -------------------------------------------------------------------------
 typedef std::list< Song > TList;
@@ -24,7 +24,7 @@ typedef std::list< Song > TList;
 // typedef std::set< Song >  TSet;
 // typedef std::map< std::string, Song >  TMap;
 // TODO #12: definir nombre alternativo para monticulo de tipo Song
-// typedef monticulo< Song > THeap;
+typedef Monticulo< Song > THeap;
 
 // -------------------------------------------------------------------------
 template< class TArbol >
@@ -53,7 +53,7 @@ int main( int argc, char* argv[] )
   // TSet miArbolRN;
   // TMap miArbolRN;
   // TODO #15: Declarar monticulo a utilizar
-  // THeap miMonticulo;
+  THeap miMonticulo;
 
   // Llenar arbol rojinegro y calcular el tiempo empleado
   std::clock_t inicioLecturaRN = std::clock( );
@@ -89,7 +89,7 @@ int main( int argc, char* argv[] )
 
   // Llenar monticulo y calcular el tiempo empleado
   std::clock_t inicioLecturaHeap = std::clock( );
-  bool lecturaHeap = addData( miArbolRN, argv[ 1 ] );
+  bool lecturaHeap = addData( miMonticulo, argv[ 1 ] );
   std::clock_t finLecturaHeap = std::clock( );
   double tiempoLecturaHeap = ( finLecturaHeap - inicioLecturaHeap ) / double( CLOCKS_PER_SEC );
   if( lecturaHeap )
@@ -110,7 +110,7 @@ int main( int argc, char* argv[] )
   // TODO #18: Generar el recorrido en inorden de los arboles a través de una funcion de cada arbol
   // miArbolAVL.inordenEnLista( inordenAVL );
   // miArbolRN.inordenEnLista( inordenRN );
-  // miMonticulo.inordenEnLista( inordenHeap );
+  //miMonticulo.inordenEnLista( inordenHeap );
 
   if( inordenAVL.size( ) != inordenRN.size( ) && inordenAVL.size( ) != inordenHeap.size( ) )
   {
@@ -158,7 +158,7 @@ int main( int argc, char* argv[] )
 
   // busqueda en monticulo y calcular el tiempo empleado
   std::clock_t inicioBusquedaHeap = std::clock( );
-  bool BusquedaHeap = searchData( miArbolAVL, argv[ 2 ] );
+  bool BusquedaHeap = searchData( miMonticulo, argv[ 2 ] );
   std::clock_t finBusquedaHeap = std::clock( );
   double tiempoBusquedaHeap = ( finBusquedaHeap - inicioBusquedaHeap ) / double( CLOCKS_PER_SEC );
   if( BusquedaHeap )
@@ -208,7 +208,7 @@ int main( int argc, char* argv[] )
 
   // eliminacion en monticulo y calcular el tiempo empleado
   std::clock_t inicioeliminacionHeap = std::clock( );
-  bool eliminacionHeap = deleteData( miArbolAVL, argv[ 2 ] );
+  bool eliminacionHeap = deleteData( miMonticulo, argv[ 2 ] );
   std::clock_t fineliminacionHeap = std::clock( );
   double tiempoeliminacionHeap = ( fineliminacionHeap - inicioeliminacionHeap ) / double( CLOCKS_PER_SEC );
   if( eliminacionHeap )
@@ -278,7 +278,7 @@ bool deleteData( TArbol& arbol, const std::string& nomArch )
     // TODO #22: Leer la linea del archivo y extraer el identificador a eliminar
     
     // TODO #23: Implementar la función delete en cada uno de los arboles
-    arbol.delete( valor );  // El arbol debe proveer el metodo "delete"
+    arbol.eliminar( valor );  // El arbol debe proveer el metodo "delete"
 
   } // elihw
   entrada.close( );

@@ -1,6 +1,7 @@
 #include "ArbolBinarioOrd.h"
 #include "ArbolAVL.h"
 
+
 template <class T>
 bool ArbolAVL<T>::insertar(T val) {
     this->raiz = insertarRec(this->raiz, val);

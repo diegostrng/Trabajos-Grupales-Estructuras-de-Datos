@@ -2,6 +2,27 @@
 #include "ArbolAVL.h"
 
 template <class T>
+bool ArbolAVL<T>::buscar(T val) {
+    return buscarRec(this->raiz, val);
+}
+
+template <class T>
+bool ArbolAVL<T>::buscarRec(NodoBinario<T>* nodo, T val) {
+    if (nodo == nullptr) {
+        return false;
+    }
+
+    if (val < nodo->obtenerDato()) {
+        return buscarRec(nodo->obtenerHijoIzq(), val);
+    } else if (val > nodo->obtenerDato()) {
+        return buscarRec(nodo->obtenerHijoDer(), val);
+    } else {
+        return true; // Valor encontrado
+    }
+}
+
+
+template <class T>
 bool ArbolAVL<T>::insertar(T val) {
     this->raiz = insertarRec(this->raiz, val);
     return true;
