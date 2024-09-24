@@ -70,6 +70,8 @@ NodoBinario<T>* ArbolAVL<T>::insertar(NodoBinario<T>* nodo, T val) {
 }
 
 
+
+//Funcion de Eliminar
 template <class T>
 NodoBinario<T>* ArbolAVL<T>::eliminar(NodoBinario<T>* nodo, T val) {
     // Paso 1: Realizar la eliminación estándar en el BST
