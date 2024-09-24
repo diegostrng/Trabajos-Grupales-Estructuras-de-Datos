@@ -3,7 +3,7 @@
 
 #include <deque>
 #include <algorithm>
-
+#include <list>
 
 template< class T >
 class Monticulo{
@@ -14,12 +14,10 @@ class Monticulo{
     ~Monticulo();
     void search(const T& value);
     void insert(const T& value); 
-    void eliminar(const T& value);  
-    std::deque<T> inOrden();
-    std::deque<T> posOrden();
-    std::deque<T> preOrden();
-    std::deque<T> niveles();             
-
+    void eliminar (const T& value);  
+    void inordenEnLista(std::list<T>& lista);
+    std::list<T> inOrdenRecursivo(int i);
+    int tam();
 };
 
 #endif// __MONTICULO_H__
