@@ -1,6 +1,7 @@
 #include "ArbolBinarioOrd.h"
 #include "ArbolAVL.h"
 
+//Buscar
 template <class T>
 bool ArbolAVL<T>::buscar(T val) {
     return buscarRec(this->raiz, val);
@@ -20,6 +21,7 @@ bool ArbolAVL<T>::buscarRec(NodoBinario<T>* nodo, T val) {
         return true; // Valor encontrado
     }
 }
+
 
 //Funcion de Insertar
 template <class T>
@@ -69,43 +71,79 @@ NodoBinario<T>* ArbolAVL<T>::insertar(NodoBinario<T>* nodo, T val) {
 
 
 template <class T>
-bool ArbolAVL<T>::eliminar(T val) {
-    this->raiz = eliminarRec(this->raiz, val);
-    return true;
-}
-
-template <class T>
-NodoBinario<T>* ArbolAVL<T>::eliminarRec(NodoBinario<T>* nodo, T val) {
-    if (nodo == nullptr) {
+NodoBinario<T>* ArbolAVL<T>::eliminar(NodoBinario<T>* nodo, T val) {
+    // Paso 1: Realizar la eliminación estándar en el BST
+    if (nodo == nullptr)
         return nodo;
-    }
 
-    if (val < nodo->obtenerDato()) {
-        nodo->fijarHijoIzq(eliminarRec(nodo->obtenerHijoIzq(), val));
-    } else if (val > nodo->obtenerDato()) {
-        nodo->fijarHijoDer(eliminarRec(nodo->obtenerHijoDer(), val));
-    } else {
+    // Si el valor a eliminar es menor que el valor del nodo, se encuentra en el subárbol izquierdo
+    if (val < nodo->obtenerDato())
+        nodo->fijarHijoIzq(eliminar(nodo->obtenerHijoIzq(), val));
+
+    // Si el valor a eliminar es mayor que el valor del nodo, se encuentra en el subárbol derecho
+    else if (val > nodo->obtenerDato())
+        nodo->fijarHijoDer(eliminar(nodo->obtenerHijoDer(), val));
+
+    // Si el valor es igual al valor del nodo, este es el nodo a eliminar
+    else {
+        // Nodo con un solo hijo o sin hijos
         if ((nodo->obtenerHijoIzq() == nullptr) || (nodo->obtenerHijoDer() == nullptr)) {
-            NodoBinario<T>* temp = nodo->obtenerHijoIzq() ? nodo->obtenerHijoIzq() : nodo->obtenerHijoDer();
+            NodoBinario<T>* temp = nodo->obtenerHijoIzq() ? 
+                                   nodo->obtenerHijoIzq() : 
+                                   nodo->obtenerHijoDer();
+
+            // Caso sin hijos
             if (temp == nullptr) {
                 temp = nodo;
                 nodo = nullptr;
-            } else {
-                *nodo = *temp;
-            }
+            } else // Caso con un solo hijo
+                *nodo = *temp; // Copiar el contenido del hijo no vacío
             delete temp;
         } else {
+            // Nodo con dos hijos: obtener el sucesor en orden (el más pequeño en el subárbol derecho)
             NodoBinario<T>* temp = minValueNode(nodo->obtenerHijoDer());
-            nodo->fijarDato(temp->obtenerDato());
-            nodo->fijarHijoDer(eliminarRec(nodo->obtenerHijoDer(), temp->obtenerDato()));
+
+            // Copiar los datos del sucesor en orden a este nodo
+            nodo->setDato(temp->obtenerDato());
+
+            // Eliminar el sucesor en orden
+            nodo->fijarHijoDer(eliminar(nodo->obtenerHijoDer(), temp->obtenerDato()));
         }
     }
 
-    if (nodo == nullptr) {
+    // Si el árbol tenía solo un nodo, retornar
+    if (nodo == nullptr)
         return nodo;
+
+    // Paso 2: Actualizar la altura del nodo actual
+    nodo->setAltura(1 + std::max(obtenerAltura(nodo->obtenerHijoIzq()), obtenerAltura(nodo->obtenerHijoDer())));
+
+    // Paso 3: Obtener el factor de balance de este nodo (para verificar si este nodo se volvió desequilibrado)
+    int balance = obtenerBalance(nodo);
+
+    // Si este nodo se vuelve desequilibrado, entonces hay 4 casos
+
+    // Caso Izquierda Izquierda
+    if (balance > 1 && obtenerBalance(nodo->obtenerHijoIzq()) >= 0)
+        return rotarDerecha(nodo);
+
+    // Caso Izquierda Derecha
+    if (balance > 1 && obtenerBalance(nodo->obtenerHijoIzq()) < 0) {
+        nodo->fijarHijoIzq(rotarIzquierda(nodo->obtenerHijoIzq()));
+        return rotarDerecha(nodo);
     }
 
-    return balancear(nodo);
+    // Caso Derecha Derecha
+    if (balance < -1 && obtenerBalance(nodo->obtenerHijoDer()) <= 0)
+        return rotarIzquierda(nodo);
+
+    // Caso Derecha Izquierda
+    if (balance < -1 && obtenerBalance(nodo->obtenerHijoDer()) > 0) {
+        nodo->fijarHijoDer(rotarDerecha(nodo->obtenerHijoDer()));
+        return rotarIzquierda(nodo);
+    }
+
+    return nodo;
 }
 
 template <class T>

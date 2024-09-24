@@ -9,12 +9,16 @@ public:
     void insertar(T val) {
         this->raiz = insertar(this->raiz, val);
     }
-    bool eliminar(T val);
+
+    void eliminar(T val) {
+        this->raiz = eliminar(this->raiz, val);
+    }
+
     bool buscar(T val);
 
 private:
     NodoBinario<T>* insertar(NodoBinario<T>* nodo, T val);
-    NodoBinario<T>* eliminarRec(NodoBinario<T>* nodo, T val);
+    NodoBinario<T>* eliminar(NodoBinario<T>* nodo, T val);
     NodoBinario<T>* minValueNode(NodoBinario<T>* nodo);
     NodoBinario<T>* maxValueNode(NodoBinario<T>* nodo);
     int obtenerAltura(NodoBinario<T>* nodo);
