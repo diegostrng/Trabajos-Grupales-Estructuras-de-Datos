@@ -1,72 +1,54 @@
 #include "ArbolBinarioOrd.h"
 #include "ArbolAVL.h"
 
-//Buscar
-template <class T>
-void ArbolAVL<T>::buscar(T val) {
-    NodoBinario<T>* nodo = this->raiz;
-    bool encontrado = false;
 
-    while (nodo != nullptr && !encontrado) {
-        if (val < nodo->obtenerDato()) {
-            nodo = nodo->obtenerHijoIzq();
-        } else if (val > nodo->obtenerDato()) {
-            nodo = nodo->obtenerHijoDer();
-        } else {
-            encontrado = true;
-        }
-    }
-
-    if (encontrado) {
-        std::cout << "Valor encontrado: " << val << std::endl;
-    } else {
-        std::cout << "Valor no encontrado: " << val << std::endl;
-    }
-}
 
 //Funcion de Insertar
 template <class T>
 NodoBinario<T>* ArbolAVL<T>::insertar(NodoBinario<T>* nodo, T val) {
-    // Realizar la inserción normal en el BST
+    // Primero hacemos la inserión normal de ser necesario
+    //Osea, si el nodo en el que se esta actualmente es nulo, pues encontramos el lugar.
     if (nodo == nullptr) 
         return new NodoBinario<T>(val);
 
+    // Si el valor a insertar es menor que el valor del nodo actual, ir al subárbol izquierdo
     if (val < nodo->obtenerDato()) 
         nodo->fijarHijoIzq(insertar(nodo->obtenerHijoIzq(), val));
+    // Si el valor a insertar es mayor que el valor del nodo actual, ir al subárbol derecho
     else if (val > nodo->obtenerDato()) 
         nodo->fijarHijoDer(insertar(nodo->obtenerHijoDer(), val));
-    else // No se permiten valores duplicados
+    else // Si el valor ya existe en el árbol no se inserta
         return nodo;
 
-    // Actualizar la altura de este nodo ancestro
+    //Actualizar la altura
     nodo->setAltura(1 + std::max(obtenerAltura(nodo->obtenerHijoIzq()), obtenerAltura(nodo->obtenerHijoDer())));
 
-    // Obtener el factor de balance de este nodo ancestro
+    // Obtenemos la diferencia entre la altura
     int balance = obtenerBalance(nodo);
 
-    // Si este nodo se vuelve desequilibrado, entonces hay 4 casos
+    //Si se desequilibra, tenemos 4 casos
 
-    // Caso Izquierda Izquierda
+    // Caso Izquierda Izquierda. Rotación Derecha.
     if (balance > 1 && val < nodo->obtenerHijoIzq()->obtenerDato()) 
         return rotarDerecha(nodo);
 
-    // Caso Derecha Derecha
+    // Caso Derecha Derecha. Rotación Izquierda.
     if (balance < -1 && val > nodo->obtenerHijoDer()->obtenerDato()) 
         return rotarIzquierda(nodo);
 
-    // Caso Izquierda Derecha
+    // Caso Izquierda Derecha. Rotación Izquierda y luego Derecha.
     if (balance > 1 && val > nodo->obtenerHijoIzq()->obtenerDato()) { 
         nodo->fijarHijoIzq(rotarIzquierda(nodo->obtenerHijoIzq())); 
         return rotarDerecha(nodo); 
     } 
 
-    // Caso Derecha Izquierda
+    // Caso Derecha Izquierda. Rotación Derecha y luego Izquierda.
     if (balance < -1 && val < nodo->obtenerHijoDer()->obtenerDato()) { 
         nodo->fijarHijoDer(rotarDerecha(nodo->obtenerHijoDer())); 
         return rotarIzquierda(nodo); 
     } 
 
-    // Retornar el puntero del nodo (sin cambios)
+    //Y pues si no se desequilibra, pues retornamos el nodo y ya
     return nodo; 
 }
 
@@ -148,6 +130,31 @@ NodoBinario<T>* ArbolAVL<T>::eliminar(NodoBinario<T>* nodo, T val) {
 
     return nodo;
 }
+
+//Funcion de Buscar
+template <class T>
+void ArbolAVL<T>::buscar(T val) {
+    NodoBinario<T>* nodo = this->raiz;
+    bool encontrado = false;
+
+    while (nodo != nullptr && !encontrado) {
+        if (val < nodo->obtenerDato()) {
+            nodo = nodo->obtenerHijoIzq();
+        } else if (val > nodo->obtenerDato()) {
+            nodo = nodo->obtenerHijoDer();
+        } else {
+            encontrado = true;
+        }
+    }
+
+    if (encontrado) {
+        std::cout << "Valor encontrado: " << val << std::endl;
+    } else {
+        std::cout << "Valor no encontrado: " << val << std::endl;
+    }
+}
+
+
 
 template <class T>
 NodoBinario<T>* ArbolAVL<T>::minValueNode(NodoBinario<T>* nodo) {
