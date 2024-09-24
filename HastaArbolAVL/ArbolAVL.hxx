@@ -21,29 +21,52 @@ bool ArbolAVL<T>::buscarRec(NodoBinario<T>* nodo, T val) {
     }
 }
 
-
+//Funcion de Insertar
 template <class T>
-bool ArbolAVL<T>::insertar(T val) {
-    this->raiz = insertarRec(this->raiz, val);
-    return true;
-}
-
-template <class T>
-NodoBinario<T>* ArbolAVL<T>::insertarRec(NodoBinario<T>* nodo, T val) {
-    if (nodo == nullptr) {
+NodoBinario<T>* ArbolAVL<T>::insertar(NodoBinario<T>* nodo, T val) {
+    // Realizar la inserción normal en el BST
+    if (nodo == nullptr) 
         return new NodoBinario<T>(val);
-    }
 
-    if (val < nodo->obtenerDato()) {
-        nodo->fijarHijoIzq(insertarRec(nodo->obtenerHijoIzq(), val));
-    } else if (val > nodo->obtenerDato()) {
-        nodo->fijarHijoDer(insertarRec(nodo->obtenerHijoDer(), val));
-    } else {
-        return nodo; // No se permiten valores duplicados
-    }
+    if (val < nodo->obtenerDato()) 
+        nodo->fijarHijoIzq(insertar(nodo->obtenerHijoIzq(), val));
+    else if (val > nodo->obtenerDato()) 
+        nodo->fijarHijoDer(insertar(nodo->obtenerHijoDer(), val));
+    else // No se permiten valores duplicados
+        return nodo;
 
-    return balancear(nodo);
+    // Actualizar la altura de este nodo ancestro
+    nodo->setAltura(1 + std::max(obtenerAltura(nodo->obtenerHijoIzq()), obtenerAltura(nodo->obtenerHijoDer())));
+
+    // Obtener el factor de balance de este nodo ancestro
+    int balance = obtenerBalance(nodo);
+
+    // Si este nodo se vuelve desequilibrado, entonces hay 4 casos
+
+    // Caso Izquierda Izquierda
+    if (balance > 1 && val < nodo->obtenerHijoIzq()->obtenerDato()) 
+        return rotarDerecha(nodo);
+
+    // Caso Derecha Derecha
+    if (balance < -1 && val > nodo->obtenerHijoDer()->obtenerDato()) 
+        return rotarIzquierda(nodo);
+
+    // Caso Izquierda Derecha
+    if (balance > 1 && val > nodo->obtenerHijoIzq()->obtenerDato()) { 
+        nodo->fijarHijoIzq(rotarIzquierda(nodo->obtenerHijoIzq())); 
+        return rotarDerecha(nodo); 
+    } 
+
+    // Caso Derecha Izquierda
+    if (balance < -1 && val < nodo->obtenerHijoDer()->obtenerDato()) { 
+        nodo->fijarHijoDer(rotarDerecha(nodo->obtenerHijoDer())); 
+        return rotarIzquierda(nodo); 
+    } 
+
+    // Retornar el puntero del nodo (sin cambios)
+    return nodo; 
 }
+
 
 template <class T>
 bool ArbolAVL<T>::eliminar(T val) {

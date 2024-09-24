@@ -6,12 +6,14 @@
 template <class T>
 class ArbolAVL : public ArbolBinarioOrd<T> {
 public:
-    bool insertar(T val);
+    void insertar(T val) {
+        this->raiz = insertar(this->raiz, val);
+    }
     bool eliminar(T val);
     bool buscar(T val);
 
 private:
-    NodoBinario<T>* insertarRec(NodoBinario<T>* nodo, T val);
+    NodoBinario<T>* insertar(NodoBinario<T>* nodo, T val);
     NodoBinario<T>* eliminarRec(NodoBinario<T>* nodo, T val);
     NodoBinario<T>* minValueNode(NodoBinario<T>* nodo);
     NodoBinario<T>* maxValueNode(NodoBinario<T>* nodo);
