@@ -3,25 +3,26 @@
 
 //Buscar
 template <class T>
-bool ArbolAVL<T>::buscar(T val) {
-    return buscarRec(this->raiz, val);
-}
+void ArbolAVL<T>::buscar(T val) {
+    NodoBinario<T>* nodo = this->raiz;
+    bool encontrado = false;
 
-template <class T>
-bool ArbolAVL<T>::buscarRec(NodoBinario<T>* nodo, T val) {
-    if (nodo == nullptr) {
-        return false;
+    while (nodo != nullptr && !encontrado) {
+        if (val < nodo->obtenerDato()) {
+            nodo = nodo->obtenerHijoIzq();
+        } else if (val > nodo->obtenerDato()) {
+            nodo = nodo->obtenerHijoDer();
+        } else {
+            encontrado = true;
+        }
     }
 
-    if (val < nodo->obtenerDato()) {
-        return buscarRec(nodo->obtenerHijoIzq(), val);
-    } else if (val > nodo->obtenerDato()) {
-        return buscarRec(nodo->obtenerHijoDer(), val);
+    if (encontrado) {
+        std::cout << "Valor encontrado: " << val << std::endl;
     } else {
-        return true; // Valor encontrado
+        std::cout << "Valor no encontrado: " << val << std::endl;
     }
 }
-
 
 //Funcion de Insertar
 template <class T>

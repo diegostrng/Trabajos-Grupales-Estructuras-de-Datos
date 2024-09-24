@@ -6,6 +6,9 @@
 template <class T>
 class ArbolAVL : public ArbolBinarioOrd<T> {
 public:
+
+    //Pongo en publico para poder utilizar estos metodos que se nos piden en el taller
+
     void insertar(T val) {
         this->raiz = insertar(this->raiz, val);
     }
@@ -14,7 +17,7 @@ public:
         this->raiz = eliminar(this->raiz, val);
     }
 
-    bool buscar(T val);
+    void buscar(T val);
 
 private:
     NodoBinario<T>* insertar(NodoBinario<T>* nodo, T val);
