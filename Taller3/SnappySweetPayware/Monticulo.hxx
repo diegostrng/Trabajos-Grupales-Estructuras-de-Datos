@@ -15,33 +15,35 @@ Monticulo<T>::~Monticulo() {
 }
 
 template <typename T>
-void Monticulo<T>::search(const T& value){
+void Monticulo<T>::search(std::string id){
  for(int i=0; i<datos.size(); i++){
-    if (datos[i]==value){
-       std::cout<<"El valor se encuentra en la posición: "<<i<<std::endl;
+    if (datos[i].getID()==id){
+       //std::cout<<"El valor se encuentra en la posición: "<<i<<std::endl;
        return;
     }
  }
- std::cout<<"No se encontro el valor"<<std::endl;
+ //std::cout<<"No se encontro el valor"<<std::endl;
 }
 
 template <typename T>
 void Monticulo<T>::insert(const T& value){
+   //std::cout<<"PRUEBA"<<std::endl;
+  //std::cout<<value.getID()<<std::endl;
   datos.push_back(value);            
-  std::push_heap(datos.begin(), datos.end());
+  //std::push_heap(datos.begin(), datos.end());
   std::make_heap(datos.begin(), datos.end());
 }
 
 template <typename T>
-void Monticulo<T>::eliminar (const T& value){
+void Monticulo<T>::eliminar (std::string id){
     for(int i=0; i<datos.size(); i++){
-        if (datos[i]==value){
+        if (datos[i].getID()==id){
         datos.erase(datos.begin() + i); 
             std::make_heap(datos.begin(), datos.end());
             return;
         }
     }
-    std::cout<<"No se encontro el valor"<<std::endl;
+   // std::cout<<"No se encontro el valor"<<std::endl;
 }
 
 template <typename T>
@@ -49,10 +51,10 @@ std::list<T> Monticulo<T>::inOrdenRecursivo(int i) {
     std::list<T> aux;
     if (i < datos.size()) {
         std::list<T> izquierda = inOrdenRecursivo(2*i+1); 
-        aux.splice(aux.end(), izquierda);  
-        aux.push_back(datos[i]);                 
+        aux.insert(aux.end(), izquierda.begin(), izquierda.end());  
+        aux.push_back(datos[i]);       
         std::list<T> derecha = inOrdenRecursivo(2*i+2); 
-        aux.splice(aux.end(), derecha);  
+        aux.insert(aux.end(), derecha.begin(), derecha.end());  
     }
     return aux;  
 }
@@ -61,6 +63,10 @@ std::list<T> Monticulo<T>::inOrdenRecursivo(int i) {
 template <typename T>
 void Monticulo<T>::inordenEnLista(std::list<T>& lista) {
     lista = inOrdenRecursivo(0);  
+    /*std::cout<<"InOrden"<<std::endl;
+    for(T t : lista){
+        std::cout<<t.getID()<<std::endl;
+    }*/
 }
 
 template <typename T>
