@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <deque>
+#include <list>
 #include "Monticulo.h"
 
 template <typename T>
@@ -14,73 +15,61 @@ Monticulo<T>::~Monticulo() {
 }
 
 template <typename T>
-void Monticulo<T>::search(const T& value){
+void Monticulo<T>::search(std::string id){
  for(int i=0; i<datos.size(); i++){
-    if (datos[i]==value){
-       std::cout<<"El valor se encuentra en la posición: "<<i<<std::endl;
+    if (datos[i].getID()==id){
+       //std::cout<<"El valor se encuentra en la posición: "<<i<<std::endl;
        return;
     }
  }
- std::cout<<"No se encontro el valor"<<std::endl;
+ //std::cout<<"No se encontro el valor"<<std::endl;
 }
 
 template <typename T>
 void Monticulo<T>::insert(const T& value){
+   //std::cout<<"PRUEBA"<<std::endl;
+  //std::cout<<value.getID()<<std::endl;
   datos.push_back(value);            
-  std::push_heap(datos.begin(), datos.end());
+  //std::push_heap(datos.begin(), datos.end());
+  std::make_heap(datos.begin(), datos.end());
 }
 
 template <typename T>
-void Monticulo<T>::eliminar(const T& value){
-    
+void Monticulo<T>::eliminar (std::string id){
+    for(int i=0; i<datos.size(); i++){
+        if (datos[i].getID()==id){
+        datos.erase(datos.begin() + i); 
+            std::make_heap(datos.begin(), datos.end());
+            return;
+        }
+    }
+   // std::cout<<"No se encontro el valor"<<std::endl;
 }
 
 template <typename T>
-void inOrdenRecursivo(const std::deque<T>& datos, std::deque<T>& resultado, int i) {
-    if (i>=datos.size()) return;  
-    inOrdenRecursivo(datos, resultado, 2*i+1); 
-    resultado.push_back(datos[i]);                
-    inOrdenRecursivo(datos, resultado, 2*i+2); 
+std::list<T> Monticulo<T>::inOrdenRecursivo(int i) {
+    std::list<T> aux;
+    if (i < datos.size()) {
+        std::list<T> izquierda = inOrdenRecursivo(2*i+1); 
+        aux.insert(aux.end(), izquierda.begin(), izquierda.end());  
+        aux.push_back(datos[i]);       
+        std::list<T> derecha = inOrdenRecursivo(2*i+2); 
+        aux.insert(aux.end(), derecha.begin(), derecha.end());  
+    }
+    return aux;  
+}
+
+
+template <typename T>
+void Monticulo<T>::inordenEnLista(std::list<T>& lista) {
+    lista = inOrdenRecursivo(0);  
+    /*std::cout<<"InOrden"<<std::endl;
+    for(T t : lista){
+        std::cout<<t.getID()<<std::endl;
+    }*/
 }
 
 template <typename T>
-void preOrdenRecursivo(const std::deque<T>& datos, std::deque<T>& resultado, int i) {
-    if (i>=datos.size()) return;
-    resultado.push_back(datos[i]);                  
-    preOrdenRecursivo(datos, resultado, 2*i+1);  
-    preOrdenRecursivo(datos, resultado, 2*i+2);  
+int Monticulo<T>::tam(){
+    return datos.size();
 }
-
-template <typename T>
-void posOrdenRecursivo(const std::deque<T>& datos, std::deque<T>& resultado, int i) {
-    if (i>=datos.size()) return;
-    posOrdenRecursivo(datos, resultado,2*i+1);  
-    posOrdenRecursivo(datos, resultado,2*i+2);  
-    resultado.push_back(datos[i]);                 
-}
-
-template <typename T>
-std::deque<T> Monticulo<T>::inOrden() {
-    std::deque<T> resultado;
-    inOrdenRecursivo(datos, resultado, 0);  // Llamar a la función recursiva empezando en la raíz (índice 0)
-    return resultado;
-}
-
-template <typename T>
-std::deque<T> Monticulo<T>::preOrden() {
-    std::deque<T> resultado;
-    preOrdenRecursivo(datos, resultado, 0);  // Empezar en la raíz (índice 0)
-    return resultado;
-}
-
-template <typename T>
-std::deque<T> Monticulo<T>::posOrden() {
-    std::deque<T> resultado;
-    posOrdenRecursivo(datos, resultado, 0);  // Empezar en la raíz (índice 0)
-    return resultado;
-}
-
-template <typename T>
-std::deque<T> Monticulo<T>:: niveles (){
-  return datos;
-}             
