@@ -4,7 +4,7 @@
 #include "ArbolBinarioOrd.h"
 
 template <class T>
-class ArbolAVL : public ArbolBinarioOrd<T> {
+class arbolAVL : public ArbolBinarioOrd<T> {
 public:
 
     //Pongo en publico para poder utilizar estos metodos que se nos piden en el taller

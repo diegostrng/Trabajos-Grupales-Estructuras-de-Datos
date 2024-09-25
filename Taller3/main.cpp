@@ -8,7 +8,7 @@
 #include "song.h"
 
 // TODO #7: incluir cabecera arbol AVL
-//#include "arbolAVL.h"
+#include "ArbolAVL.h"
 // TODO #8: incluir cabecera arbol RN a utilizar
 #include <set>
 #include <map>
@@ -19,7 +19,7 @@
 typedef std::list< Song > TList;
 
 // TODO #10: definir nombre alternativo para arbol AVL de tipo Song
-//typedef arbolAVL< Song > TAVL;
+typedef ArbolAVL< Song > TAVL;
 // TODO #11: definir nombre alternativo para arbol RN de tipo Song
 typedef std::set< Song >  TSet;
 //typedef std::map< std::string, Song >  TMap;
