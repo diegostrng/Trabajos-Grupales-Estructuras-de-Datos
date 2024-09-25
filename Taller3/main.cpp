@@ -22,7 +22,7 @@ typedef std::list< Song > TList;
 typedef ArbolAVL< Song > TAVL;
 // TODO #11: definir nombre alternativo para arbol RN de tipo Song
 typedef std::set< Song >  TSet;
-//typedef std::map< std::string, Song >  TMap;
+typedef std::map< std::string, Song >  TMap;
 // TODO #12: definir nombre alternativo para monticulo de tipo Song
 typedef Monticulo<Song> THeap;
 
@@ -48,10 +48,10 @@ int main( int argc, char* argv[] )
 
   // Declarar arboles a usar
   // TODO #13: Declarar arbol AVL a utilizar
-   // TAVL miArbolAVL;
+   TAVL miArbolAVL;
   // TODO #14: Declarar arbol RN a utilizar
    TSet miArbolRN;
-  //TMap miArbolRN;
+   TMap miArbolRN;
   // TODO #15: Declarar monticulo a utilizar
     THeap miMonticulo;
 
@@ -72,9 +72,9 @@ int main( int argc, char* argv[] )
       << std::endl;
 
   // Llenar arbol AVL y calcular el tiempo empleado
-  /*
+  
   std::clock_t inicioLecturaAVL = std::clock( );
-  //bool lecturaAVL = addData( miArbolAVL, argv[ 1 ] );
+  bool lecturaAVL = addData( miArbolAVL, argv[ 1 ] );
   std::clock_t finLecturaAVL = std::clock( );
   double tiempoLecturaAVL = ( finLecturaAVL - inicioLecturaAVL ) / double( CLOCKS_PER_SEC );
   if( lecturaAVL )
@@ -87,7 +87,7 @@ int main( int argc, char* argv[] )
     << "Error al leer \"" << argv[ 1 ]
     << "\" para llenar el arbol AVL."
     << std::endl;
-*/
+
   // Llenar monticulo y calcular el tiempo empleado
   std::clock_t inicioLecturaHeap = std::clock( );
   bool lecturaHeap = addData( miMonticulo, argv[ 1 ] );
