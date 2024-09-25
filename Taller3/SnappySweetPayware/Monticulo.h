@@ -12,12 +12,14 @@ class Monticulo{
   public:
     Monticulo();
     ~Monticulo();
-    void search(const T& value);
+    void search(std::string id);
     void insert(const T& value); 
-    void eliminar (const T& value);  
+    void eliminar (std::string id);  
     void inordenEnLista(std::list<T>& lista);
     std::list<T> inOrdenRecursivo(int i);
     int tam();
 };
+
+#include "Monticulo.hxx"
 
 #endif// __MONTICULO_H__
